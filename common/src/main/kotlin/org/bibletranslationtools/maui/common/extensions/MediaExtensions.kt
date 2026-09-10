@@ -5,11 +5,12 @@ enum class MediaExtensions(vararg val ext: String) {
     MP3("mp3"),
     WAV("wav"),
     JPG("jpg", "jpeg"),
-    CUE("cue");
+    CUE("cue"),
+    ORATURE("orature", "zip");
 
     val norm = ext.first()
 
-    companion object: SupportedExtensions {
+    companion object : SupportedExtensions {
         override fun isSupported(ext: String) =
             values().any {
                 it.name == ext.uppercase() || it.ext.contains(ext)

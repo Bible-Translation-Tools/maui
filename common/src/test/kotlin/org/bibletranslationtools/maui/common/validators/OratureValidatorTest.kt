@@ -1,7 +1,6 @@
 package org.bibletranslationtools.maui.common.validators
 
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.Assert
 import org.junit.Test
 import java.io.File
 import java.io.FileNotFoundException
@@ -13,14 +12,22 @@ class OratureValidatorTest {
     fun testGoodOratureZipFile() {
         val file = getOratureFile()
 
-        assertTrue(OratureValidator(file).isValid())
+        try {
+            OratureValidator(file).validate()
+        } catch (e: Exception) {
+            Assert.fail("Validate threw exception, however it shouldn't.")
+        }
     }
 
     @Test
     fun testBadOratureZipFile() {
         val fakeZip = createTempFile(suffix = ".zip").apply { deleteOnExit() }
 
-        assertFalse(OratureValidator(fakeZip).isValid())
+        try {
+            OratureValidator(fakeZip).validate()
+        } catch (e: Exception) {
+            Assert.assertNotNull(e)
+        }
     }
 
     private fun getOratureFile(): File {

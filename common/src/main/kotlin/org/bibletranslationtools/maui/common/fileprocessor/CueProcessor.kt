@@ -2,18 +2,20 @@ package org.bibletranslationtools.maui.common.fileprocessor
 
 import org.bibletranslationtools.maui.common.data.FileResult
 import org.bibletranslationtools.maui.common.data.FileStatus
+import org.bibletranslationtools.maui.common.data.Media
+import org.bibletranslationtools.maui.common.data.ProcessFile
 import org.bibletranslationtools.maui.common.extensions.MediaExtensions
 import org.bibletranslationtools.maui.common.validators.CueValidator
 import java.io.File
 import java.lang.IllegalArgumentException
 import java.util.Queue
 
-class CueProcessor: FileProcessor() {
+class CueProcessor : FileProcessor() {
     override fun process(
-            file: File,
-            fileQueue: Queue<File>,
-            resultList: MutableList<FileResult>
-    ): FileStatus {
+        file: File,
+        fileQueue: Queue<ProcessFile>,
+        parentFile: File?
+    ): FileResult? {
         val ext = try {
             MediaExtensions.of(file.extension)
         } catch (ex: IllegalArgumentException) {
@@ -21,18 +23,21 @@ class CueProcessor: FileProcessor() {
         }
 
         if (ext != MediaExtensions.CUE) {
-            return FileStatus.REJECTED
+            return null
         }
 
-        return try {
+        val media = try {
             CueValidator(file).validate()
-            val fileData = getFileData(file)
-            val result = FileResult(status = FileStatus.PROCESSED, data = fileData)
-            resultList.add(result)
-
-            FileStatus.PROCESSED
+            getMedia(file).copy(parentFile = parentFile)
         } catch (ex: Exception) {
-            FileStatus.REJECTED
+            Media(
+                file = file,
+                status = FileStatus.REJECTED,
+                statusMessage = ex.message,
+                parentFile = parentFile
+            )
         }
+
+        return FileResult(file, media.status, media.statusMessage, media)
     }
 }

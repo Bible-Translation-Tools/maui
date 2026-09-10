@@ -1,7 +1,9 @@
 package org.bibletranslationtools.maui.common.io
 
-import io.reactivex.Single
-
 interface IResourceReader {
-    fun read(): Single<List<String>>
+    fun read(): List<String>
 }
+
+interface IBooksReader : IResourceReader
+interface ILanguagesReader : IResourceReader
+interface IResourceTypesReader : IResourceReader

@@ -1,0 +1,67 @@
+.upload-page .root-container {
+    -fx-padding: 0 20px 20px 20px;
+    -fx-spacing: 20px;
+}
+
+.upload-page .controls {
+    -fx-alignment: center-left;
+    -fx-padding: 20px 0;
+    -fx-spacing: 15px;
+}
+
+.upload-page .controls .controls-title {
+    -fx-font-size: 2.25em;
+}
+
+.upload-page .controls .controls-title .ikonli-font-icon {
+    -fx-icon-color: -wa-primary;
+    -fx-cursor: hand;
+}
+
+.upload-page .controls .controls-subtitle {
+    -fx-font-size: 1.25em;
+    -fx-text-fill: -wa-gray-dark;
+}
+
+.upload-page .controls .btn .ikonli-font-icon,
+.upload-footer .btn .ikonli-font-icon {
+    -fx-icon-size: 20px;
+}
+
+.upload-page .name-edit {
+    -fx-alignment: center-left;
+    -fx-spacing: 10px;
+}
+
+.upload-page .name-edit-input {
+    -fx-pref-height: 36px;
+    -fx-font-size: 1.25em;
+}
+
+.upload-page .btn--edit {
+    -fx-pref-width: 70px;
+    -fx-text-fill: -wa-primary;
+    -fx-font-size: 1.25em;
+    -fx-font-weight: bold;
+}
+
+.upload-page .btn--edit .ikonli-font-icon {
+    -fx-icon-color: -wa-primary;
+    -fx-icon-size: 40px;
+}
+
+.upload-footer {
+    -fx-pref-height: 74px;
+    -fx-background-color: -wa-gray-lighter;
+    -fx-padding: 10 20;
+    -fx-alignment: center-left;
+    -fx-spacing: 10px;
+}
+
+.upload-footer .btn--secondary {
+    -fx-background-color: -wa-white;
+}
+
+.upload-footer .btn--secondary:hover {
+    -fx-background-color: -wa-primary-light;
+}

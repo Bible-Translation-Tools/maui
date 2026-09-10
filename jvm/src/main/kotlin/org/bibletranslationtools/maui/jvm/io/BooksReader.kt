@@ -3,20 +3,18 @@ package org.bibletranslationtools.maui.jvm.io
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.reactivex.Single
-import org.bibletranslationtools.maui.common.io.IResourceReader
+import org.bibletranslationtools.maui.common.io.IBooksReader
+import javax.inject.Inject
 
-class BooksReader : IResourceReader {
+class BooksReader @Inject constructor() : IBooksReader {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     private data class BookSchema(
         val slug: String
     )
 
-    override fun read(): Single<List<String>> {
-        return Single.fromCallable {
-            parseBooks()
-        }
+    override fun read(): List<String> {
+        return parseBooks()
     }
 
     private fun parseBooks(): List<String> {

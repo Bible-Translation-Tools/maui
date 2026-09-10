@@ -1,30 +1,34 @@
 package org.bibletranslationtools.maui.common.validators
 
-import org.junit.Rule
+import org.junit.Assert
 import org.junit.Test
-import org.junit.rules.ExpectedException
 import java.io.File
 
 class Mp3ValidatorTest {
-
-    @Rule
-    @JvmField
-    val expectedException: ExpectedException = ExpectedException.none()
 
     @Test
     fun testGoodMp3File() {
         val file = File(javaClass.getResource("/test.mp3").file)
         val validator = Mp3Validator(file)
-        validator.validate()
+
+        try {
+            validator.validate()
+        } catch (e: Exception) {
+            Assert.fail("Validate threw exception, however it shouldn't.")
+        }
     }
 
     @Test
     fun testBadMp3File() {
-        expectedException.expect(IllegalArgumentException::class.java)
-        expectedException.expectMessage("Not a mp3 file")
-
         val file = File(javaClass.getResource("/fake.mp3").file)
         val validator = Mp3Validator(file)
-        validator.validate()
+
+        val error = Assert.assertThrows(
+            IllegalArgumentException::class.java,
+            validator::validate
+        )
+
+        Assert.assertEquals(IllegalArgumentException::class.java, error.javaClass)
+        Assert.assertEquals("Not a mp3 file", error.message)
     }
 }

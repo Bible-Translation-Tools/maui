@@ -1,0 +1,40 @@
+.startup__page {
+    -fx-background-color: -wa-primary-common;
+}
+
+.startup__page-main {
+    -fx-spacing: 100px;
+    -fx-alignment: center;
+}
+
+.upload-target {
+    -fx-alignment: center;
+    -fx-spacing: 20px;
+}
+
+.app-name__text {
+    -fx-text-fill: -wa-white;
+    -fx-font-size: 48px;
+}
+
+.upload-target__text {
+    -fx-text-fill: -wa-white;
+    -fx-font-size: 36px;
+}
+
+.upload-target__btn {
+    -fx-pref-width: 266px;
+    -fx-pref-height: 70px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.5em;
+}
+
+.upload-target__btn--dev {
+    -fx-text-fill: -wa-accent-common;
+}
+
+.upload-target__btn--prod {
+    -fx-text-fill: -wa-primary-common;
+}

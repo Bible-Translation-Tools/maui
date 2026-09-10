@@ -1,0 +1,8 @@
+@import "/css/root.css"
+
+.dev-target {
+    -wa-primary: #01A299;
+    -wa-primary-light: #C8FFF4;
+    -wa-primary-dark: #017972;
+    -wa-primary-text: -wa-gray-darker;
+}

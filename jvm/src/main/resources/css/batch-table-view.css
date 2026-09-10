@@ -1,0 +1,113 @@
+.batch-table-view {
+    -fx-table-cell-border-color: transparent;
+    -fx-background-color: -wa-white;
+    -fx-background-radius: 10;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+/* header */
+.batch-table-view .corner,
+.batch-table-view .column-header,
+.batch-table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+.batch-table-view .column-header {
+    -fx-cursor: hand;
+    -fx-padding: 0 0 0 15;
+}
+
+.batch-table-view .column-header .label {
+    -fx-alignment: center-left;
+    -fx-font-size: 1.1em;
+    -fx-font-weight: 600;
+    -fx-text-fill: -wa-gray;
+}
+
+.batch-table-view .column-header .arrow {
+    -fx-background-color: -wa-gray;
+}
+
+.batch-table-view .column-header-background {
+    -fx-background-color: -wa-white;
+    -fx-background-radius: 8 8 0 0;
+    -fx-padding: 8 0;
+}
+
+/* cells */
+.batch-table-view .table-cell {
+    -fx-border-color: transparent transparent -wa-gray-light transparent;
+    -fx-border-width: 1px;
+    -fx-padding: 0 15;
+    -fx-alignment: center-left;
+}
+
+.batch-table-view .table-cell:empty {
+    -fx-border-color: transparent;
+}
+
+.batch-table-view .table-row-cell {
+    -fx-pref-height: 50px;
+    -fx-background-color: -wa-white;
+    -fx-alignment: center-left;
+    -fx-cursor: hand;
+}
+
+.batch-table-view .table-row-cell:hover {
+    -fx-background-color: transparent, -wa-primary-light;
+}
+
+.batch-table-view .table-row-cell:empty {
+    -fx-background-color: transparent;
+    -fx-cursor: default;
+}
+
+.batch-table-view .table-row-cell:empty .table-cell {
+    -fx-border-color: transparent;
+}
+
+.batch-table-view .placeholder {
+    -fx-alignment: center;
+    -fx-spacing: 12px;
+}
+
+.batch-table-view .placeholder-icon .ikonli-font-icon {
+    -fx-icon-size: 60px;
+    -fx-icon-color: -wa-gray;
+}
+
+.batch-table-view .placeholder-text {
+    -fx-font-size: 1.5em;
+    -fx-text-fill: -wa-gray;
+}
+
+.batch-table-view .name-cell-view {
+    -fx-alignment: center-left;
+    -fx-spacing: 6px;
+}
+
+.batch-table-view .file-icon .ikonli-font-icon {
+    -fx-icon-size: 20px;
+}
+
+.batch-table-view .name {
+    -fx-text-fill: -wa-gray-darker;
+}
+
+.batch-table-view .name-edit-input {
+    -fx-max-width: 300px;
+}
+
+.batch-table-view .btn--edit {
+    -fx-pref-width: 70px;
+    -fx-text-fill: -wa-primary;
+}
+
+.batch-table-view .btn--edit .ikonli-font-icon {
+    -fx-icon-color: -wa-primary;
+}
+
+.batch-table-view .btn--delete .ikonli-font-icon {
+    -fx-icon-color: -wa-red;
+}

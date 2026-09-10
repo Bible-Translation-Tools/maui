@@ -1,0 +1,33 @@
+.upload-target-header {
+    -fx-alignment: center-left;
+    -fx-pref-height: 60px;
+    -fx-background-color: -wa-primary-light;
+    -fx-padding: 10px 20px;
+}
+
+.upload-target-header__title {
+    -fx-alignment: center-left;
+    -fx-spacing: 15px;
+}
+
+.upload-target-header__title-dot .ikonli-font-icon {
+    -fx-icon-color: -wa-primary;
+    -fx-icon-size: 20px;
+}
+
+.upload-target-header__title-text {
+    -fx-font-size: 2.25em;
+}
+
+.upload-target-header__select {
+    -fx-alignment: center-left;
+    -fx-spacing: 10px;
+}
+
+.upload-target-header__select-text {
+    -fx-font-weight: bold;
+}
+
+.upload-target-header__select-combo {
+    -fx-pref-width: 264px;
+}

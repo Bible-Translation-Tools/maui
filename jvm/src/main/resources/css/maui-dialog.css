@@ -1,0 +1,10 @@
+.maui-dialog {
+    -fx-background-color: -wa-gray-semitransparent;
+    -fx-alignment: center;
+    -fx-padding: 50px;
+}
+
+.maui-dialog .main-container {
+    -fx-alignment: center;
+    -fx-effect: -wa-shadow2;
+}

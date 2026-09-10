@@ -1,6 +1,7 @@
 package org.bibletranslationtools.maui.common.usecases
 
-import org.bibletranslationtools.maui.common.data.FileData
+import org.bibletranslationtools.maui.common.data.FileStatus
+import org.bibletranslationtools.maui.common.data.Media
 import org.bibletranslationtools.maui.common.data.Grouping
 import org.bibletranslationtools.maui.common.data.MediaQuality
 import java.io.File
@@ -35,7 +36,7 @@ class ParseFileName(private val file: File) {
         private const val BOOK = "(?:_([1-3]{0,1}[a-zA-Z]{2,3}))??"
         private const val EXTRA_BOOK = "([1-3]?[a-zA-Z]{2,3})_"
         private const val CHAPTER = "(?:_c([\\d]{1,3}))?"
-        private const val EXTRA_CHAPTER = "_(\\d{1,3})"
+        private const val EXTRA_CHAPTER = "(?<!^)(\\d{1,3})"
         private const val VERSE = "(?:_v([\\d]{1,3})(?:-([\\d]{1,3}))?)?"
         private const val TAKE = "(?:_t([\\d]{1,2}))?"
         private const val QUALITY = "(?:_(hi|low))?"
@@ -50,7 +51,6 @@ class ParseFileName(private val file: File) {
                 TAKE +
                 QUALITY +
                 GROUPING + "$"
-
     }
 
     private var matcher: Matcher? = null
@@ -59,8 +59,8 @@ class ParseFileName(private val file: File) {
         matcher = findMatch(file.nameWithoutExtension)
     }
 
-    fun parse(): FileData {
-        return FileData(
+    fun parse(): Media {
+        return Media(
                 file,
                 findLanguage(),
                 findResourceType(),
@@ -68,7 +68,8 @@ class ParseFileName(private val file: File) {
                 findChapter(),
                 null,
                 findQuality(),
-                findGrouping()
+                findGrouping(),
+                FileStatus.PROCESSED
         )
     }
 

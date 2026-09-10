@@ -1,10 +1,10 @@
 package org.bibletranslationtools.maui.common.usecases
 
 import io.reactivex.Single
-import org.bibletranslationtools.maui.common.data.FileData
+import org.bibletranslationtools.maui.common.data.Media
 import java.util.regex.Pattern
 
-class MakePath(private val fileData: FileData) {
+class MakePath(private val media: Media) {
 
     companion object {
         private const val CONTENTS = "CONTENTS"
@@ -14,40 +14,38 @@ class MakePath(private val fileData: FileData) {
 
     fun build(): Single<String> {
         return Single.fromCallable {
-            validateFileData()
-
             val initialPath = buildInitialPath()
 
             when {
-                fileData.isContainerAndCompressed -> {
+                media.isContainerAndCompressed -> {
                     arrayOf(
                         initialPath,
-                        fileData.mediaExtension,
-                        fileData.mediaQuality,
-                        fileData.grouping,
+                        media.mediaExtension,
+                        media.mediaQuality,
+                        media.grouping,
                         filename
                     ).joinToString("/")
                 }
-                fileData.isContainer -> {
+                media.isContainer -> {
                     arrayOf(
                         initialPath,
-                        fileData.mediaExtension,
-                        fileData.grouping,
+                        media.mediaExtension,
+                        media.grouping,
                         filename
                     ).joinToString("/")
                 }
-                fileData.isCompressed -> {
+                media.isCompressed -> {
                     arrayOf(
                         initialPath,
-                        fileData.mediaQuality,
-                        fileData.grouping,
+                        media.mediaQuality,
+                        media.grouping,
                         filename
                     ).joinToString("/")
                 }
                 else -> {
                     arrayOf(
                         initialPath,
-                        fileData.grouping,
+                        media.grouping,
                         filename
                     ).joinToString("/")
                 }
@@ -55,97 +53,67 @@ class MakePath(private val fileData: FileData) {
         }
     }
 
-    private fun validateFileData() {
-        when {
-            fileData.language.isNullOrBlank() -> {
-                throw IllegalArgumentException("Language should be specified")
-            }
-            fileData.resourceType == null -> {
-                throw IllegalArgumentException("Resource type should be specified")
-            }
-            fileData.chapter != null && fileData.book == null -> {
-                throw IllegalArgumentException("Book needs to be specified")
-            }
-            fileData.grouping == null -> {
-                throw IllegalArgumentException("Grouping needs to be specified")
-            }
-            (fileData.isContainer || fileData.isContainerAndCompressed) && fileData.mediaExtension == null -> {
-                throw IllegalArgumentException("Media extension needs to be specified for container")
-            }
-            (fileData.isCompressed || fileData.isContainerAndCompressed) && fileData.mediaQuality == null -> {
-                throw IllegalArgumentException("Media quality needs to be specified for compressed media")
-            }
-            !fileData.isContainer && fileData.mediaExtension != null -> {
-                throw IllegalArgumentException("Media extension cannot be applied to non-container media")
-            }
-            !fileData.isCompressed && !fileData.isContainerAndCompressed && fileData.mediaQuality != null -> {
-                throw IllegalArgumentException("Non-compressed media should not have a quality")
-            }
-        }
-    }
-
     private fun buildInitialPath(): String {
         return when {
-            fileData.book.isNullOrBlank() -> {
+            media.chapter != null -> {
                 arrayOf(
-                    fileData.language,
-                    fileData.resourceType,
+                    media.language,
+                    media.resourceType,
+                    media.book,
+                    media.chapter,
                     CONTENTS,
-                    fileData.extension
-                ).joinToString("/")
-            }
-            fileData.chapter != null -> {
-                arrayOf(
-                    fileData.language,
-                    fileData.resourceType,
-                    fileData.book,
-                    fileData.chapter,
-                    CONTENTS,
-                    fileData.extension
+                    media.extension
                 ).joinToString("/")
             }
             else -> {
                 arrayOf(
-                    fileData.language,
-                    fileData.resourceType,
-                    fileData.book,
+                    media.language,
+                    media.resourceType,
+                    media.book,
                     CONTENTS,
-                    fileData.extension
+                    media.extension
                 ).joinToString("/")
             }
         }
     }
 
     private fun normalizeFileName(): String {
-        val filename = if (hasVerse()) {
-            val filenameWithoutExtension = fileData.file.nameWithoutExtension
-                .lowercase()
+        val str = StringBuilder()
+        str.append("${media.language}_${media.resourceType}_${media.book}")
 
-            filenameWithoutExtension
-        } else {
-            val str = StringBuilder()
-            str.append("${fileData.language}_${fileData.resourceType}")
+        media.chapter?.let { chapter ->
+            val verse = getVerse()
 
-            if (!fileData.book.isNullOrBlank()) {
-                str.append("_${fileData.book}")
+            // Different chapter padding for verse files and chapter files
+            if (verse == null) {
+                str.append("_c$chapter")
+            } else {
+                str.append("_c${padChapter(media.book, chapter)}")
+                str.append("_$verse")
             }
-
-            if (fileData.chapter != null) {
-                str.append("_c${fileData.chapter}")
-            }
-
-            str.toString()
         }
 
-        return filename
-            .replace(Regex("_t([\\d]{1,2})"), "")
-            .plus(".${fileData.extension}")
+        str.append(".${media.extension}")
+
+        return str.toString()
     }
 
-    private fun hasVerse(): Boolean {
-        val verseRegex = "_(v[\\d]{1,3}(-[\\d]{1,3})?)"
+    private fun padChapter(book: String?, chapter: Int): String {
+        return if (book == "psa") {
+            chapter.toString().padStart(3, '0')
+        } else {
+            chapter.toString().padStart(2, '0')
+        }
+    }
+
+    private fun getVerse(): String? {
+        val verseRegex = "_(v\\d{1,3}(-\\d{1,3})?)"
         val pattern = Pattern.compile(verseRegex, Pattern.CASE_INSENSITIVE)
-        val matcher = pattern.matcher(fileData.file.nameWithoutExtension)
-        return matcher.find()
+        val matcher = pattern.matcher(media.file.nameWithoutExtension)
+
+        val found = matcher.find()
+        return if (found) {
+            matcher.group(1)?.lowercase()
+        } else null
     }
 }

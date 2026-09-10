@@ -3,6 +3,7 @@ package org.bibletranslationtools.maui.jvm.client
 import io.reactivex.Completable
 import org.apache.commons.net.ftp.FTP
 import org.apache.commons.net.ftp.FTPClient
+import org.apache.commons.net.ftp.FTPReply
 import org.bibletranslationtools.maui.common.client.IFileTransferClient
 import java.io.File
 import java.io.IOException
@@ -11,12 +12,11 @@ import java.net.SocketException
 
 class FtpTransferClient(
     private val source: File,
-    private val targetPath: String
+    private val targetPath: String,
+    private val ftpServer: String,
+    private val ftpUser: String,
+    private val ftpPassword: String
 ) : IFileTransferClient {
-
-    private val ftpServer = System.getenv("MAUI_FTP_SERVER")
-    private val ftpUser = System.getenv("MAUI_FTP_USER")
-    private val ftpPassword = System.getenv("MAUI_FTP_PASSWORD")
 
     override fun transfer(): Completable {
         return Completable.fromCallable {
@@ -28,6 +28,11 @@ class FtpTransferClient(
                 ftpClient.login(ftpUser, ftpPassword)
                 ftpClient.enterLocalPassiveMode()
                 ftpClient.setFileType(FTP.BINARY_FILE_TYPE)
+
+                if (!FTPReply.isPositiveCompletion(ftpClient.replyCode)) {
+                    ftpClient.disconnect()
+                    throw IOException("Username or password incorrect.")
+                }
 
                 val dirsCreated = createFtpDirectories(ftpClient)
                 if (dirsCreated) {

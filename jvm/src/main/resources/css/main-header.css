@@ -1,0 +1,21 @@
+.main-header {
+    -fx-alignment: center-left;
+    -fx-pref-height: 50px;
+    -fx-background-color: -wa-primary;
+    -fx-padding: 10px 20px;
+}
+
+.main-header-app-name__text {
+    -fx-font-size: 1.5em;
+    -fx-text-fill: -wa-primary-text;
+    -fx-font-weight: bold;
+}
+
+.main-header-home__icon {
+    -fx-cursor: hand;
+}
+
+.main-header-home__icon .ikonli-font-icon {
+    -fx-icon-color: -wa-primary-text;
+    -fx-icon-size: 30px;
+}

@@ -3,20 +3,19 @@ package org.bibletranslationtools.maui.jvm.io
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.reactivex.Single
-import org.bibletranslationtools.maui.common.io.IResourceReader
+import org.bibletranslationtools.maui.common.io.IResourceTypesReader
+import javax.inject.Inject
 
-class ResourceTypesReader : IResourceReader {
+
+class ResourceTypesReader @Inject constructor() : IResourceTypesReader {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     private data class ResourceTypeSchema(
         val slug: String
     )
 
-    override fun read(): Single<List<String>> {
-        return Single.fromCallable {
-            parseResourceTypes()
-        }
+    override fun read(): List<String> {
+        return parseResourceTypes()
     }
 
     private fun parseResourceTypes(): List<String> {

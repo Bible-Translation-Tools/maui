@@ -1,0 +1,84 @@
+.alert-dialog {
+    -fx-pref-width: 600px;
+    -fx-min-height: 200px;
+    -fx-max-height: 600px;
+    -fx-background-color: -wa-white;
+}
+
+.alert-dialog .header {
+    -fx-spacing: 10px;
+    -fx-pref-height: 72px;
+    -fx-font-size: 1.5em;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+    -fx-padding: 12 16;
+}
+
+.alert-dialog .header .label {
+    -fx-text-fill: -wa-primary;
+}
+
+.alert-dialog:warning .header .label {
+    -fx-text-fill: -wa-red;
+}
+
+.alert-dialog .header .ikonli-font-icon {
+    -fx-icon-size: 24px;
+    -fx-icon-color: -wa-primary;
+}
+
+.alert-dialog:warning .header .ikonli-font-icon {
+    -fx-icon-color: -wa-red;
+}
+
+.alert-dialog .body {
+    -fx-spacing: 16;
+    -fx-padding: 12px 16px;
+    -fx-text-alignment: justify;
+    -fx-background-color: -wa-white;
+    -fx-alignment: top-left;
+}
+
+.alert-dialog .message {
+    -fx-text-fill: -wa-gray-darker;
+    -fx-font-size: 1.4em;
+    -fx-wrap-text: true;
+}
+
+.alert-dialog .details {
+    -fx-max-height: 400px;
+    -fx-padding: 5px 0;
+    -fx-border-color: transparent;
+    -fx-font-size: 1.4em;
+}
+
+.alert-dialog .details,
+.alert-dialog .details > .viewport {
+    -fx-background-color: transparent;
+}
+
+.alert-dialog .footer {
+    -fx-spacing: 16;
+    -fx-padding: 0 16px 12px 16px;
+    -fx-background-color: -wa-white;
+}
+
+.alert-dialog .footer .btn {
+    -fx-max-width: infinity;
+    -fx-pref-height: 48px;
+    -fx-font-size: 1.25em;
+    -fx-font-weight: 500;
+}
+
+.alert-dialog:warning .btn--secondary {
+    -fx-text-fill: -wa-red;
+    -fx-border-color: -wa-red;
+}
+
+.alert-dialog:warning .btn--secondary:hover {
+    -fx-background-color: -wa-red-light;
+}
+
+.alert-dialog:warning .btn--secondary .ikonli-font-icon {
+    -fx-icon-color: -wa-red;
+}

@@ -1,14 +1,14 @@
 package org.bibletranslationtools.maui.jvm.io
 
+import org.junit.Assert
 import org.junit.Test
 
 class BooksReaderTest {
 
     @Test
     fun testReadBooksFile() {
-        val result = BooksReader().read().test()
+        val result = BooksReader().read()
 
-        result.assertComplete()
-        result.assertNoErrors()
+        Assert.assertEquals(66, result.size)
     }
 }

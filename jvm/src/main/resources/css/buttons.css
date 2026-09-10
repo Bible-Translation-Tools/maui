@@ -1,5 +1,3 @@
-@import "root.css"
-
 .btn {
     -fx-pref-height: 40px;
     -fx-background-radius: 4px;
@@ -17,16 +15,44 @@
     -fx-border-width: 0px;
 }
 
+.btn--primary-inverted {
+    -fx-background-color: -wa-white;
+    -fx-effect: -wa-shadow2;
+    -fx-text-fill: -wa-primary;
+    -fx-border-width: 0px;
+}
+
 .btn--primary:hover {
     -fx-background-color: -wa-primary-dark;
     -fx-effect: -wa-shadow1;
 }
 
+.btn--primary-inverted:hover {
+    -fx-background-color: -wa-primary-light;
+    -fx-effect: -wa-shadow1;
+}
+
 .btn--primary:disabled {
-    -fx-background-color: -wa-gray-lighter;
+    -fx-background-color: -wa-gray-light;
     -fx-text-fill: -wa-gray-dark;
     -fx-effect: -wa-shadow0;
     -fx-cursor: disappear;
+}
+
+.btn--primary-inverted:disabled {
+    -fx-background-color: -wa-gray;
+    -fx-text-fill: -wa-gray-dark;
+    -fx-effect: -wa-shadow0;
+    -fx-cursor: disappear;
+}
+
+.btn--primary .ikonli-font-icon {
+    -fx-icon-color: -wa-white;
+    -fx-icon-size: 20px;
+}
+
+.btn--primary:disabled .ikonli-font-icon {
+    -fx-icon-color: -wa-gray-dark;
 }
 
 /* Secondary Button */
@@ -42,7 +68,47 @@
 }
 .btn--secondary:disabled {
     -fx-cursor: disappear;
-    -fx-text-fill: -wa-gray;
+    -fx-text-fill: -wa-gray-dark;
     -fx-border-color: -wa-gray-light;
     -fx-border-width: 2px;
+}
+
+.btn--secondary .ikonli-font-icon {
+    -fx-icon-color: -wa-primary;
+    -fx-icon-size: 20px;
+}
+
+.btn--secondary:disabled .ikonli-font-icon {
+    -fx-icon-color: -wa-gray-dark;
+}
+
+/* Button Icon */
+.btn--icon {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-pref-width: 36px;
+    -fx-min-width: 36px;
+    -fx-pref-height: 36px;
+    -fx-min-height: 36px;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.btn--icon .ikonli-font-icon {
+    -fx-icon-color: -wa-gray-darker;
+    -fx-icon-size: 20px;
+}
+
+.btn--icon:disabled {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+.btn--icon:selected {
+    -fx-background-color: green;
+    -fx-border-width: 0;
+}
+
+.btn--icon:selected .ikonli-font-icon {
+    -fx-fill: orange;
 }

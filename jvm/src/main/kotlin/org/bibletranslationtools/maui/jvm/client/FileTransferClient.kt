@@ -8,7 +8,7 @@ import java.lang.IllegalArgumentException
 class FileTransferClient(
     private val source: File,
     private val target: File
-): IFileTransferClient {
+) : IFileTransferClient {
 
     override fun transfer(): Completable {
         return Completable.fromCallable {

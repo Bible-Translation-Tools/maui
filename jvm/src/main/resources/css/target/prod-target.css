@@ -1,0 +1,8 @@
+@import "/css/root.css"
+
+.prod-target {
+    -wa-primary: #0056D1;
+    -wa-primary-light: #EEF0FF;
+    -wa-primary-dark: #00377C;
+    -wa-primary-text: -wa-white;
+}

@@ -1,0 +1,212 @@
+/* -------------- Combobox ---------------- */
+
+.wa-combobox {
+    -fx-background-color: -wa-gray-darker;
+    -fx-background-radius: 8px;
+    -fx-border-width: 2px;
+    -fx-border-color: -wa-gray-darker;
+    -fx-border-radius: 8px;
+    -fx-font-size: 1em;
+    -fx-pref-height: 48px;
+    -fx-cursor: hand;
+}
+
+.wa-combobox .list-cell {
+    -fx-text-fill: -wa-white;
+}
+
+.wa-combobox:pressed .list-cell {
+    -fx-text-fill: -wa-gray-darker;
+}
+
+.wa-combobox .arrow {
+    -fx-background-color: -wa-white;
+}
+
+.wa-combobox:pressed {
+    -fx-background-color: -wa-gray-light;
+}
+
+.wa-combobox .list-cell:hover,
+.wa-combobox .combo-box-popup .list-cell:hover {
+    -fx-background-color: -wa-gray-dark;
+}
+
+.wa-combobox .combo-box-popup {
+    -fx-pref-height: 200px;
+}
+
+.wa-combobox .combo-box-popup .list-cell {
+    -fx-padding: 5px;
+    -fx-background-color: -wa-gray-darker;
+}
+
+.wa-combobox .combo-box-popup .list-cell:selected {
+    -fx-background-color: -wa-primary;
+    -fx-text-fill: -wa-white;
+}
+
+/* Common scrollbar styles */
+.scroll-bar:vertical {
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-pref-width: 20;
+}
+
+.scroll-bar:horizontal {
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-pref-height: 20;
+}
+
+.scroll-bar .thumb {
+    -fx-padding: 0;
+    -fx-alignment: center;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-insets: 2 0;
+}
+
+.scroll-bar:horizontal .thumb {
+    -fx-background-insets: 0 2;
+}
+
+.scroll-bar .thumb .thumb-icon {
+    -fx-font-size: 18;
+    -fx-icon-color: #33445C;
+}
+
+.scroll-bar .track {
+    -fx-background-color: #66768B;
+}
+
+.scroll-pane .corner {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-insets: 0;
+    -fx-font-size: 12;
+    -fx-padding: 6;
+    -fx-alignment: center;
+ }
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-background-color: #33445C;
+}
+
+.scroll-bar:vertical .decrement-arrow {
+    -fx-shape: "M5 0 L10 10 L0 10 Z";
+}
+
+.scroll-bar:vertical .increment-arrow {
+    -fx-shape: "M0 0 L10 0 L5 10 Z";
+}
+
+.scroll-bar:horizontal .decrement-arrow {
+    -fx-shape: "M0 5 L10 0 L10 10 Z";
+}
+
+.scroll-bar:horizontal .increment-arrow {
+    -fx-shape: "M0 0 L0 10 L10 5 Z";
+}
+
+/** Checkbox */
+.wa-checkbox .box {
+    -fx-border-width: 2px;
+    -fx-border-color: -wa-gray-darker;
+    -fx-border-radius: 2px;
+    -fx-background-color: -wa-primary-light;
+    -fx-padding: 3px;
+}
+
+.wa-checkbox:selected .box {
+    -fx-border-color: -wa-gray-darker;
+    -fx-background-color: -wa-gray-darker;
+}
+
+.wa-checkbox .box > .mark {
+    -fx-padding: 5px;
+}
+
+.wa-checkbox:selected .box > .mark {
+    -fx-background-color: -wa-primary-light;
+    -fx-shape: "M1.73,12.91 8.1,19.28 22.79,4.59 22.79,1.59 8.1,16.28 1.73,9.91";
+}
+
+/* -------------- Text Input ---------------- */
+.wa-text-field {
+    -fx-border-width: 1px;
+    -fx-border-color: -wa-gray;
+    -fx-border-radius: 12px;
+    -fx-background-color: -wa-white;
+    -fx-background-radius: 14px;
+    -fx-text-fill: -wa-gray;
+    -fx-font-size: 1.5em;
+}
+
+.wa-text-field:focused {
+    -fx-border-color: -wa-primary;
+    -fx-border-width: 2px;
+    -fx-text-fill: -wa-gray-darker;
+}
+
+.wa-text-field:disabled {
+    -fx-border-width: 0px;
+    -fx-background-color: -wa-gray-light;
+}
+
+.wa-text-field {
+    -fx-padding: 6 11 6 5;
+}
+
+.wa-text-field .left-pane {
+    -fx-padding: 0 3 0 10;
+}
+
+.wa-text-field .left-pane .button,
+.wa-text-field .left-pane .ikonli-font-icon,
+.wa-text-field .right-pane .button,
+.wa-text-field .right-pane .ikonli-font-icon {
+    -fx-icon-color: -wa-gray;
+    -fx-text-fill: -wa-gray;
+}
+
+.wa-text-field:focused .left-pane .button,
+.wa-text-field:focused .left-pane .ikonli-font-icon,
+.wa-text-field:focused .right-pane .button,
+.wa-text-field:focused .right-pane .ikonli-font-icon {
+    -fx-icon-color: -wa-gray-dark;
+    -fx-text-fill: -wa-gray-dark;
+}
+
+.wa-password-field .right-pane {
+    -fx-cursor: hand;
+}
+
+/* Progress bar */
+.wa-progress-bar {
+    -fx-pref-height: 30px;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.wa-progress-bar .track {
+    -fx-background-insets: 0;
+    -fx-background-radius: 5px;
+    -fx-arc-height: 5;
+    -fx-arc-width: 5;
+}
+
+.wa-progress-bar .bar {
+    -fx-background-color: -wa-primary;
+    -fx-background-insets: 0;
+    -fx-background-radius: 8px 0 0 8px;
+    -fx-arc-height: 5;
+    -fx-arc-width: 5;
+}

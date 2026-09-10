@@ -2,16 +2,23 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlinVer"
     implementation "org.slf4j:slf4j-api:$slf4jApiVer"
     implementation "org.slf4j:slf4j-simple:$slf4jApiVer"
-    implementation"com.fasterxml.jackson.core:jackson-databind:$jacksonVer"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVer"
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVer"
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVer"
     implementation "com.github.WycliffeAssociates.ArchiveOfHolding:aoh:$aohVer"
     implementation "org.wycliffeassociates.otter.common:audio:$otterAudioVer"
     implementation "org.apache.tika:tika-core:$tikaVer"
     implementation "org.wycliffeassociates:kotlin-resource-container:$kotlinRC"
+    implementation "org.digitalmediaserver:cuelib-core:$cuelibVer"
+    implementation "ie.corballis:sox-java:$sox"
+
+    //Dagger2
+    implementation "com.google.dagger:dagger:$daggerVer"
+    kapt "com.google.dagger:dagger-compiler:$daggerVer"
 
     // Testing
     testImplementation "junit:junit:$junitVer"
     testImplementation "org.mockito:mockito-core:$mockitoVer"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVer"
+    testImplementation "io.mockk:mockk:$mockkVer"
 }

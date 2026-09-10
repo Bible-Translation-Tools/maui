@@ -8,16 +8,11 @@ apply plugin: 'idea'
 apply plugin: 'edu.sc.seis.launch4j'
 
 javafx {
-    version = '11'
+    version = "$javafxVer"
     modules = ['javafx.controls', 'javafx.fxml']
 }
 
-version = '1.3.0'
-
-repositories {
-    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-    maven { url 'https://jitpack.io' }
-}
+version = '2.2.1'
 
 application {
     mainClassName = "org.bibletranslationtools.maui.jvm.MainAppKt"
@@ -25,7 +20,7 @@ application {
 
 dependencies {
     // TornadoFX
-    implementation "no.tornado:tornadofx:$tornadofxVer"
+    implementation "no.tornado:tornadofx2:$tornadofxVer"
 
     // JFoenix
     implementation "com.jfoenix:jfoenix:$jfoenixVer"
@@ -52,9 +47,25 @@ dependencies {
     // Apache network
     implementation "commons-net:commons-net:$commonsnetVer"
 
-    // Thymeleaf
-    implementation "org.thymeleaf:thymeleaf:$thymeleafVer"
-    implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:$thymeleafDialectVer"
+    //Dagger2
+    implementation "com.google.dagger:dagger:$daggerVer"
+    kapt "com.google.dagger:dagger-compiler:$daggerVer"
+
+    // Ikonli
+    implementation "org.kordamp.ikonli:ikonli-javafx:$ikonliVer"
+    implementation "org.kordamp.ikonli:ikonli-materialdesign-pack:$ikonliVer"
+
+    // ControldsFX
+    implementation "org.controlsfx:controlsfx:$controlsfxVer"
+
+    // Properties
+    implementation "org.apache.commons:commons-configuration2:$commonsConfig2Ver"
+    implementation "commons-beanutils:commons-beanutils:$commonsBeanUtilsVer"
+
+    // Log4j
+    implementation "org.slf4j:slf4j-api:$slf4jApiVer"
+    implementation "org.apache.logging.log4j:log4j-core:$log4j2Ver"
+    implementation "org.apache.logging.log4j:log4j-slf4j18-impl:$log4j2Ver"
 
     implementation project(':common')
 
@@ -62,6 +73,7 @@ dependencies {
     testImplementation "junit:junit:$junitVer"
     testImplementation "org.mockito:mockito-core:$mockitoVer"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVer"
+    testImplementation "io.mockk:mockk:$mockkVer"
 }
 
 // tell gradle what to put in the jar
