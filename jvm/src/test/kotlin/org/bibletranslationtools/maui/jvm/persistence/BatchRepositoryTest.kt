@@ -41,7 +41,10 @@ class BatchRepositoryTest {
             Assert.assertEquals("batch.maui", it.file.name)
             Assert.assertEquals("Batch", it.name)
             Assert.assertEquals("2024-01-01T01-01-01", it.created)
-            Assert.assertEquals(batch.media.value, it.media.value)
+            Assert.assertEquals(
+                batch.media.value.map { media -> media.copy(file = media.file.absoluteFile) },
+                it.media.value.map { media -> media.copy(file = media.file.absoluteFile) }
+            )
         }
     }
 

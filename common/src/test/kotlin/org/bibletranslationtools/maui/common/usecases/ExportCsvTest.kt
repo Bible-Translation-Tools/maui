@@ -14,9 +14,10 @@ class ExportCsvTest {
             deleteOnExit()
         }
         val preSize = output.length()
+        val secondFile = File("/home/user/test.mp3")
         val items = listOf(
             Media(File("example.wav"), selected = true),
-            Media(File("/home/user/test.mp3"), "en", "ulb", "gen")
+            Media(secondFile, "en", "ulb", "gen")
         )
         val result = ExportCsv().export(items, output).test()
         val postSize = output.length()
@@ -29,7 +30,7 @@ class ExportCsvTest {
         val expectedHeader = "selected,file name,parent file,language,resource type,book,chapter,media extension," +
                 "media quality,grouping,status,status message"
         val expectedFirstMedia = "*,\"example.wav\",\"--\",--,--,--,--,--,--,--,--,--"
-        val expectedSecondMedia = ",\"/home/user/test.mp3\",\"--\",en,ulb,gen,--,--,--,--,--,--"
+        val expectedSecondMedia = ",\"$secondFile\",\"--\",en,ulb,gen,--,--,--,--,--,--"
 
         var line = 1
         output.forEachLine {
