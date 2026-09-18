@@ -98,10 +98,11 @@ launch4j {
     outfile = "${rootProject.name}.exe"
     mainClassName = project.mainClassName
     bundledJrePath = "./jre"
-    bundledJre64Bit = true
-    jdkPreference = 'jdkOnly'
+    requires64Bit = true
+    requiresJdk = true
     icon = "${projectDir}/launcher.ico"
-    jar = "${buildDir}/libs/${rootProject.name}.jar"
+    copyConfigurable = []
+    jarTask = project.tasks.shadowJar
     productName = rootProject.name
     fileDescription = rootProject.name
 }

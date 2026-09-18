@@ -9,7 +9,7 @@ buildscript {
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVer"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:$ktlintPluginVer"
-        classpath "edu.sc.seis.gradle:launch4j:$launch4j"
+        classpath "edu.sc.seis.launch4j:launch4j:$launch4j"
     }
 }
 

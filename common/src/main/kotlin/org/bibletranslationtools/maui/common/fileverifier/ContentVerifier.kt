@@ -94,23 +94,20 @@ class ContentVerifier(private val versification: Versification) : FileVerifier()
 
     private fun verifyCues(cues: List<AudioCue>): VerifiedResult {
         val duplicateLocations = cues.groupingBy { it.location }.eachCount().any { it.value > 1 }
-        val duplicateVerses = cues.groupingBy { it.label }.eachCount().any { it.value > 1 }
+        val duplicateLabels = cues.groupingBy { it.label }.eachCount().any { it.value > 1 }
 
-        // Sort cues by digitized marker labels
-        val cueVerses = cues
-            .mapNotNull {  cue ->
-                cue.label.toIntOrNull()?.let { verse ->
-                    Pair(
-                        cue.location,
-                        verse
-                    )
+        // Sort verse cues by digitized marker labels (ignore book/chapter title markers)
+        val cueVerses = verseCues(cues)
+            .mapNotNull { cue ->
+                MarkerLabel.verseNumber(cue.label)?.let { verse ->
+                    Pair(cue.location, verse)
                 }
             }
             .sortedBy { it.second }
 
         return when {
             duplicateLocations -> rejected("There duplicate audio locations in the file.")
-            duplicateVerses -> rejected("There are duplicate marker labels in the file.")
+            duplicateLabels -> rejected("There are duplicate marker labels in the file.")
             // Check if locations are still sorted correctly
             !cueVerses.zipWithNext { a, b -> a.first <= b.first }.all { it } -> {
                 rejected("Marker locations and/or labels are not in correct order.")
@@ -128,13 +125,14 @@ class ContentVerifier(private val versification: Versification) : FileVerifier()
                 } else null
             }
         } ?: 0
+        val verses = verseCues(cues)
 
         return when {
             bookData == null || chapterVerses == 0 -> {
                 rejected("$chapter is not found in the book $book.")
             }
-            cues.size != chapterVerses -> {
-                rejected("$book $chapter expected $chapterVerses verses, but got ${cues.size}.")
+            verses.size != chapterVerses -> {
+                rejected("$book $chapter expected $chapterVerses verses, but got ${verses.size}.")
             }
             else -> processed()
         }
@@ -156,6 +154,7 @@ class ContentVerifier(private val versification: Versification) : FileVerifier()
             }
         } ?: 0
         val range = 1..chapterVerses
+        val verses = cues?.let { verseCues(it) }
 
         return when {
             bookData == null || chapterVerses == 0 -> {
@@ -173,17 +172,17 @@ class ContentVerifier(private val versification: Versification) : FileVerifier()
             (firstVerse != null && lastVerse != null) && firstVerse >= lastVerse -> {
                 rejected("First verse should not be greater than or equal to last verse.")
             }
-            cues != null && cues.isEmpty() -> {
+            verses != null && verses.isEmpty() -> {
                 rejected("Chunk/Verse file should have at least one verse marker.")
             }
-            (cues != null && firstVerse != null && lastVerse != null) &&
-                    cues.size != (lastVerse - firstVerse + 1) -> {
+            (verses != null && firstVerse != null && lastVerse != null) &&
+                    verses.size != (lastVerse - firstVerse + 1) -> {
                 rejected("Verses in the file name differ from number of markers in metadata.")
             }
-            (cues != null && firstVerse != null && lastVerse == null) && cues.size > 1 -> {
-                rejected("There are ${cues.size} markers in metadata. Should be only 1.")
+            (verses != null && firstVerse != null && lastVerse == null) && verses.size > 1 -> {
+                rejected("There are ${verses.size} markers in metadata. Should be only 1.")
             }
-            cues != null && !hasValidVerses(cues, firstVerse, lastVerse) -> {
+            verses != null && !hasValidVerses(verses, firstVerse, lastVerse) -> {
                 rejected("Verses in the file name differ from the verse markers in metadata.")
             }
             else -> processed()
@@ -192,7 +191,7 @@ class ContentVerifier(private val versification: Versification) : FileVerifier()
 
     private fun hasValidVerses(cues: List<AudioCue>, firstVerse: Int?, lastVerse: Int?): Boolean {
         val cueVerses = cues.mapNotNull { cue ->
-            cue.label.toIntOrNull()
+            MarkerLabel.verseNumber(cue.label)
         }
 
         return when {
@@ -207,7 +206,10 @@ class ContentVerifier(private val versification: Versification) : FileVerifier()
         }
     }
 
-    private fun getVerses(file: File) : Pair<Int?, Int?> {
+    private fun verseCues(cues: List<AudioCue>): List<AudioCue> =
+        cues.filter { MarkerLabel.isVerse(it.label) }
+
+    private fun getVerses(file: File): Pair<Int?, Int?> {
         val pattern = Pattern.compile("_v(\\d{1,3})(?:-(\\d{1,3}))?", Pattern.CASE_INSENSITIVE)
         val matcher = pattern.matcher(file.nameWithoutExtension)
 

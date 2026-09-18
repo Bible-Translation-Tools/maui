@@ -6,6 +6,10 @@ import org.bibletranslationtools.maui.common.data.Media
 import org.bibletranslationtools.maui.common.fileverifier.ContentVerifier
 import org.junit.Assert
 import org.junit.Test
+import org.wycliffeassociates.otter.common.audio.AudioFile
+import org.wycliffeassociates.otter.common.audio.DEFAULT_BITS_PER_SAMPLE
+import org.wycliffeassociates.otter.common.audio.DEFAULT_CHANNELS
+import org.wycliffeassociates.otter.common.audio.DEFAULT_SAMPLE_RATE
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -211,6 +215,70 @@ class ContentVerifierTest {
 
         Assert.assertEquals(FileStatus.REJECTED, result.status)
         Assert.assertEquals("Verses in the file name differ from the verse markers in metadata.", result.message)
+    }
+
+    @Test
+    fun verificationSuccessChapterFileWithTitleMarkers() {
+        val file = createWavWithCues(
+            "en_mat_c01_titles.wav",
+            listOf(
+                0 to "orature-book-mat",
+                50 to "orature-chapter-1",
+                100 to "orature-vm-1"
+            )
+        )
+        val media = Media(
+            file = file,
+            language = "en",
+            resourceType = "ulb",
+            book = "mat",
+            chapter = 1,
+            grouping = Grouping.CHAPTER
+        )
+        val result = ContentVerifier(versification).verify(media)
+
+        Assert.assertEquals(FileStatus.PROCESSED, result.status)
+        Assert.assertEquals(null, result.message)
+    }
+
+    @Test
+    fun verificationSuccessVerseFileWithTitleMarkers() {
+        val file = createWavWithCues(
+            "en_mat_c01_v01_titles.wav",
+            listOf(
+                0 to "orature-book-mat",
+                50 to "orature-chapter-1",
+                100 to "orature-vm-1"
+            )
+        )
+        val media = Media(
+            file = file,
+            language = "en",
+            resourceType = "ulb",
+            book = "mat",
+            chapter = 1,
+            grouping = Grouping.VERSE
+        )
+        val result = ContentVerifier(versification).verify(media)
+
+        Assert.assertEquals(FileStatus.PROCESSED, result.status)
+        Assert.assertEquals(null, result.message)
+    }
+
+    private fun createWavWithCues(fileName: String, cues: List<Pair<Int, String>>): File {
+        val file = File.createTempFile(fileName.substringBeforeLast("."), ".wav").apply {
+            deleteOnExit()
+        }
+        val audio = AudioFile(file, DEFAULT_SAMPLE_RATE, DEFAULT_CHANNELS, DEFAULT_BITS_PER_SAMPLE)
+        audio.writer().use { output ->
+            // Write a little silent PCM so the file is a valid WAV
+            output.write(ByteArray(200))
+        }
+        cues.forEach { (location, label) ->
+            audio.addCue(location, label)
+        }
+        audio.update()
+        return file
     }
 
     private fun getTestFile(fileName: String): File {
